@@ -68,6 +68,23 @@ class LinkDAO extends DAO
         }
     }
 
+    public function findRss(){
+        $sql = "SELECT *
+                FROM tl_liens
+                ORDER BY lien_id desc
+                limit 15";
+
+        $result = $this->getDb()->fetchAll($sql);
+
+        $_links = array();
+        foreach($result as $row) {
+            $linkId = $row['lien_id'];
+            $_links[$linkId] = $this->buildDomainObject($row);
+        }
+
+        return $_links;
+    }
+
     /**
      * Returns a list of all links matching the supplied tag id.
      *
